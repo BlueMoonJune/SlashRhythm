@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://csrgwbd0jcg2o"]
+
+[ext_resource type="Shader" path="res://assets/shaders/note.gdshader" id="1_22wsh"]
+[ext_resource type="Script" path="res://note.gd" id="2_x8h4p"]
+[ext_resource type="Texture2D" uid="uid://cyxibvknjgu2n" path="res://assets/sprites/note.svg" id="2_xat7e"]
+[ext_resource type="Texture2D" uid="uid://c2euj71axtgpv" path="res://assets/sprites/indicator.png" id="4_2jajj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_58c81"]
+resource_local_to_scene = true
+shader = ExtResource("1_22wsh")
+shader_parameter/color = Color(0, 1, 1, 1)
+shader_parameter/slicePoint = Vector2(0, 0)
+shader_parameter/sliceDir = Vector2(1, 0)
+shader_parameter/sliceDist = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8idqj"]
+size = Vector2(200, 300)
+
+[node name="Node2D" type="Node2D"]
+material = SubResource("ShaderMaterial_58c81")
+script = ExtResource("2_x8h4p")
+
+[node name="Note" type="Sprite2D" parent="."]
+use_parent_material = true
+texture = ExtResource("2_xat7e")
+
+[node name="Indicator" type="Sprite2D" parent="."]
+use_parent_material = true
+texture = ExtResource("4_2jajj")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_8idqj")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

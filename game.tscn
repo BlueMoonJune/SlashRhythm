@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cveqmy13pvyp2"]
+
+[ext_resource type="Script" path="res://ZoomToBox.gd" id="1_055v4"]
+[ext_resource type="Script" path="res://GameController.gd" id="1_v0coa"]
+[ext_resource type="AudioStream" uid="uid://bbb5w5gay6yhs" path="res://assets/sounds/kick.wav" id="5_f8a6w"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_v0coa")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("1_055v4")
+size = Vector2(2816, 2816)
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(1408, 1408, -1408, 1408, -1408, -1408, 1408, -1408, 1408, 1408)
+
+[node name="Song" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
+
+[node name="Kick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_f8a6w")
+
+[node name="Kick2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_f8a6w")
