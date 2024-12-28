@@ -23,7 +23,7 @@ void fragment() {
 		if (abs(side) < sliceDist) {
 			float val = abs(side) - sliceDist;
 			//if (abs(side2) / sliceDist == 0.0);
-			COLOR.rgb = color.rgb;
+			COLOR.rgb = color.rgb * 5.0 + vec3(1.0);
 			COLOR.a = color.a * 2.0 + abs(side) - sliceDist * 2.0;
 			COLOR.a *= texture(TEXTURE, norUV).a;
 		} else {
@@ -32,6 +32,7 @@ void fragment() {
 			COLOR.a *= color.a;
 		}
 	}
+	COLOR.a = clamp(COLOR.a, 0.0, 1.0);
 }
 
 //void light() {

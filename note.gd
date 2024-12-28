@@ -2,9 +2,11 @@ extends Node2D
 
 @export var color : Color = Color.BLACK
 
+const missIndicator = preload("res://miss.tscn")
+
 var time : float
 var target : Vector2 = Vector2.ZERO
-var parent : Node2D
+var parent
 
 var enter : Vector2
 var exit : Vector2
@@ -21,28 +23,59 @@ func ctor(args: Array):
 
 func _process(delta):
 	var fdt = (parent.time - time) / parent.indDur
+	visible = fdt > -1
 	var dt = min(fdt, 0)
 	var dtExp = (1 - (1 + dt) ** parent.indExp) * parent.indDist
 	var invDtExp = (1 - dt ** parent.indExp)
 	color.a = 1 - abs(fdt)
+	if abs(parent.time - time) > 0.2:
+		color.a *= parent.hitWindowAlpha
 	(material as ShaderMaterial).set_shader_parameter("color", color)
 	$Indicator.position.x = -dtExp * 128 * parent.indDist
 	$Note.global_position = position * invDtExp
 	if cut > -1:
 		cut += delta / parent.indDur * 2
-		(material as ShaderMaterial).set_shader_parameter("sliceDist", cut)
+		(material as ShaderMaterial).set_shader_parameter("sliceDist", 2 - (1 - cut / 2) ** parent.indExp * 2)
+	if cut > 2 or fdt > 1:
+		queue_free()
+	if (parent.time - time) > 0.2 and cut == -1:
+		var node = missIndicator.instantiate()
+		node.position = position
+		node.modulate = color * 4 + 0.5 * Color.WHITE
+		$"../VFXParent".add_child(node)
+		assert(node.get_parent() == $"../VFXParent")
+		cut = -2
+		parent.energy -= 15
+		print("miss", parent.energy)
+		parent.combo = 0
 	
-
-func _on_area_2d_mouse_entered() -> void:
-	if -0.2 < (parent.time - time) and (parent.time - time) < 0.2:
-		enter = get_local_mouse_position()
 	
 func _on_area_2d_mouse_exited() -> void:
-	if not enter || cut != -1: return
-	exit = get_local_mouse_position()
+	if not enter || cut >= 0: return
+	#exit = get_local_mouse_position()
+	var dif = exit - enter
+	var angle = atan2(dif.y, dif.x)
+	if abs(angle) > PI / 4: return
 	(material as ShaderMaterial).set_shader_parameter("slicePoint", enter / 256)
 	(material as ShaderMaterial).set_shader_parameter("sliceDir", (enter - exit))
 	(material as ShaderMaterial).set_shader_parameter("sliceDist", 0)
 	cut = 0
+	$Particles.position = exit
+	$Particles.rotation = angle
+	$Particles.emitting = true
+	$Particles.color = color * 4 + Color.WHITE * 0.5
+	$Particles.orbit_velocity_min += exit.y / 256
+	$Particles.orbit_velocity_max += exit.y / 256
 	$Indicator.hide()
 	$"../Kick".play()
+	parent.energy += 2
+	print("hit", parent.energy)
+	parent.combo += 1
+	parent.add_score(int(dif.normalized().x ** 4 * 100 + 50 - 50 ** -(dif.length() / 10)))
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if abs(parent.time - time) > 0.2 or area != $"../MouseRay": return
+	enter = $"../MouseRay/CollisionShape2D".shape.b * transform
+	exit = $"../MouseRay/CollisionShape2D".shape.a * transform
+	_on_area_2d_mouse_exited()
