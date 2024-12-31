@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4asp6lsq8jju"]
+
+[ext_resource type="Texture2D" uid="uid://dstucgufmhujf" path="res://assets/sprites/miss.svg" id="1_wssgi"]
+[ext_resource type="Script" path="res://Miss.gd" id="2_kmpis"]
+
+[node name="Node2D" type="Sprite2D"]
+texture = ExtResource("1_wssgi")
+script = ExtResource("2_kmpis")

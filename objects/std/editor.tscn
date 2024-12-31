@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=3 uid="uid://bylqaocd5wehg"]
+
+[ext_resource type="Script" path="res://objects/std/editor.gd" id="1_1kqmb"]
+[ext_resource type="Shader" path="res://objects/std/note.gdshader" id="2_yhbxs"]
+[ext_resource type="Texture2D" uid="uid://cyxibvknjgu2n" path="res://objects/std/note.svg" id="3_ibx8r"]
+[ext_resource type="Texture2D" uid="uid://ck6vdenvgl564" path="res://assets/sprites/particle.png" id="4_nri2d"]
+[ext_resource type="Texture2D" uid="uid://gysx65ikcsde" path="res://assets/sprites/chevron.png" id="4_wsr7g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n21bm"]
+shader = ExtResource("2_yhbxs")
+shader_parameter/color = Color(1, 0, 0, 1)
+shader_parameter/slicePoint = null
+shader_parameter/sliceDir = Vector2(1, 0)
+shader_parameter/sliceDist = null
+
+[node name="Node2D" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_1kqmb")
+
+[node name="Rotate" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 132.0
+offset_top = -41.5
+offset_right = 240.0
+offset_bottom = 41.5
+grow_vertical = 2
+mouse_filter = 1
+keep_pressed_outside = true
+icon = ExtResource("4_wsr7g")
+flat = true
+
+[node name="Note" type="Button" parent="."]
+unique_name_in_owner = true
+show_behind_parent = true
+material = SubResource("ShaderMaterial_n21bm")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -132.0
+offset_right = 132.0
+offset_bottom = 132.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+keep_pressed_outside = true
+icon = ExtResource("3_ibx8r")
+flat = true
+icon_alignment = 1
+
+[node name="Origin" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+icon = ExtResource("4_nri2d")
+flat = true

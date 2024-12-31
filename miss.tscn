@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4asp6lsq8jju"]
-
-[ext_resource type="Texture2D" uid="uid://bjw1ntvs2mvn2" path="res://assets/sprites/miss.png" id="1_wv20k"]
-[ext_resource type="Script" path="res://indicator.gd" id="2_ixhy2"]
-
-[node name="Node2D" type="Sprite2D"]
-texture = ExtResource("1_wv20k")
-script = ExtResource("2_ixhy2")

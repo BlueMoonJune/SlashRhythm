@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="/RHYTHM"
-run/main_scene="res://game.tscn"
-config/features=PackedStringArray("4.2", "Forward Plus")
+run/main_scene="res://ui/ChartSelect.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [debug]
@@ -21,5 +21,5 @@ shapes/collision/shape_color=Color(0, 0.6, 0.701961, 1)
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+environment/defaults/default_clear_color=Color(0.347656, 0.347656, 0.347656, 1)
 viewport/hdr_2d=true

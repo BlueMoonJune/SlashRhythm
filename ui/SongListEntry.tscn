@@ -1,0 +1,114 @@
+[gd_scene load_steps=13 format=3 uid="uid://b1jnkqd4b1hkb"]
+
+[ext_resource type="Shader" path="res://assets/shaders/ui/slant.gdshader" id="1_mhmd1"]
+[ext_resource type="Script" path="res://ui/song_list_entry.gd" id="2_gu0hc"]
+[ext_resource type="FontFile" uid="uid://thqcnomg0ldo" path="res://assets/fonts/regular.otf" id="2_wgpu2"]
+[ext_resource type="Shader" path="res://objects/std/note.gdshader" id="3_75gj3"]
+[ext_resource type="Script" path="res://ui/text_scroll.gd" id="3_ksyd0"]
+[ext_resource type="Texture2D" uid="uid://cyxibvknjgu2n" path="res://objects/std/note.svg" id="4_3vvar"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6a5yl"]
+shader = ExtResource("1_mhmd1")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dx0ts"]
+resource_local_to_scene = true
+content_margin_right = 20.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ic0x"]
+font = ExtResource("2_wgpu2")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_4axne"]
+font = ExtResource("2_wgpu2")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3nawn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v3fys"]
+shader = ExtResource("3_75gj3")
+shader_parameter/color = Color(0, 1, 1, 1)
+shader_parameter/slicePoint = null
+shader_parameter/sliceDir = Vector2(1, 0)
+shader_parameter/sliceDist = null
+
+[node name="SongListEntry" type="MarginContainer"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 69.0
+offset_bottom = 64.0
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 0
+script = ExtResource("2_gu0hc")
+
+[node name="Panel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+show_behind_parent = true
+material = SubResource("ShaderMaterial_6a5yl")
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dx0ts")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Labels" type="VBoxContainer" parent="Panel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TitleScroll" type="ScrollContainer" parent="Panel/HBoxContainer/Labels"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+script = ExtResource("3_ksyd0")
+
+[node name="Title" type="Label" parent="Panel/HBoxContainer/Labels/TitleScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+label_settings = SubResource("LabelSettings_6ic0x")
+
+[node name="CharterScroll" type="ScrollContainer" parent="Panel/HBoxContainer/Labels"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+script = ExtResource("3_ksyd0")
+
+[node name="Charter" type="Label" parent="Panel/HBoxContainer/Labels/CharterScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "
+"
+label_settings = SubResource("LabelSettings_4axne")
+
+[node name="HSeparator" type="HSeparator" parent="Panel/HBoxContainer/Labels"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_3nawn")
+
+[node name="Panel" type="PanelContainer" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/Panel"]
+material = SubResource("ShaderMaterial_v3fys")
+layout_mode = 2
+texture = ExtResource("4_3vvar")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Button" type="Button" parent="Panel/HBoxContainer/Panel"]
+layout_mode = 2
+focus_mode = 0
+flat = true
+
+[connection signal="pressed" from="Panel/HBoxContainer/Panel/Button" to="." method="_on_button_pressed"]

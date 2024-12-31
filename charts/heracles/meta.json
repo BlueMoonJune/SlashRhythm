@@ -1,0 +1,22 @@
+{
+	"artist": "Yooh",
+	"track": "Heracles",
+	"charter": "Eeveeisepic",
+	"difficulties": [
+		{
+			"file": "chart",
+			"difficulty": 1.5,
+			"name": "Easy"
+		},
+		{
+			"file": "chart",
+			"difficulty": 3.7,
+			"name": ""
+		},
+		{
+			"file": "chart",
+			"difficulty": 5.2,
+			"name": "Normal"
+		}
+	]
+}

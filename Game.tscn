@@ -1,0 +1,395 @@
+[gd_scene load_steps=24 format=3 uid="uid://cveqmy13pvyp2"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_gkyo4"]
+[ext_resource type="Shader" path="res://assets/shaders/ui/bg.gdshader" id="2_mp3d3"]
+[ext_resource type="Script" path="res://ZoomToBox.gd" id="3_p4f6s"]
+[ext_resource type="Texture2D" uid="uid://c4lpfb5fi8bve" path="res://assets/sprites/twin.png" id="4_hk5du"]
+[ext_resource type="AudioStream" uid="uid://bbb5w5gay6yhs" path="res://assets/sounds/kick.wav" id="5_760yn"]
+[ext_resource type="Shader" path="res://post.gdshader" id="6_g8btk"]
+[ext_resource type="FontFile" uid="uid://xbuug4vn7ln1" path="res://assets/fonts/bold.otf" id="7_4qftc"]
+[ext_resource type="FontFile" uid="uid://thqcnomg0ldo" path="res://assets/fonts/regular.otf" id="8_ofcal"]
+[ext_resource type="Texture2D" uid="uid://bhcem8sjqlh73" path="res://assets/sprites/restart.svg" id="9_hpqew"]
+[ext_resource type="Texture2D" uid="uid://cra5ejyda0nwg" path="res://assets/sprites/exit.svg" id="10_t58jh"]
+[ext_resource type="Texture2D" uid="uid://gysx65ikcsde" path="res://assets/sprites/chevron.png" id="11_66ehm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qii4k"]
+shader = ExtResource("2_mp3d3")
+
+[sub_resource type="Curve" id="Curve_xd8wy"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_pe78g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vkixq"]
+shader = ExtResource("6_g8btk")
+shader_parameter/hpass = 0.0
+shader_parameter/vpass = 1.0
+shader_parameter/radius = 65
+
+[sub_resource type="LabelSettings" id="LabelSettings_c8uve"]
+line_spacing = 0.0
+font = ExtResource("7_4qftc")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_ooqqh"]
+font = ExtResource("8_ofcal")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_uhb1f"]
+font = ExtResource("8_ofcal")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_35u2o"]
+font = ExtResource("7_4qftc")
+font_size = 32
+
+[sub_resource type="Gradient" id="Gradient_lc4tf"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.541806, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_aut8w"]
+gradient = SubResource("Gradient_lc4tf")
+
+[sub_resource type="LabelSettings" id="LabelSettings_vgdps"]
+font = ExtResource("8_ofcal")
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_cenvs"]
+font = ExtResource("8_ofcal")
+font_size = 32
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_gkyo4")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="BG" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="BG"]
+material = SubResource("ShaderMaterial_qii4k")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("3_p4f6s")
+size = Vector2(2816, 2816)
+
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+points = PackedVector2Array(1408, 1408, -1408, 1408, -1408, -1408, 1408, -1408, 1408, 1408)
+
+[node name="Trail" type="Line2D" parent="."]
+modulate = Color(0, 1, 1, 1)
+width = 50.0
+width_curve = SubResource("Curve_xd8wy")
+texture = ExtResource("4_hk5du")
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Song" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
+
+[node name="Kick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_760yn")
+
+[node name="Kick2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_760yn")
+
+[node name="VFXParent" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_right = 50.0
+offset_bottom = 61.0
+color = Color(2.373, 0, 0, 1)
+
+[node name="MouseRay" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseRay"]
+shape = SubResource("SegmentShape2D_pe78g")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="TimeT" type="ColorRect" parent="UI/UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_bottom = 10.0
+grow_vertical = 2
+mouse_filter = 1
+color = Color(1, 1, 1, 0.5)
+
+[node name="TimeB" type="ColorRect" parent="UI/UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+grow_vertical = 2
+mouse_filter = 1
+color = Color(1, 1, 1, 0.5)
+
+[node name="EnergyL" type="ColorRect" parent="UI/UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_right = 10.0
+grow_vertical = 2
+mouse_filter = 1
+color = Color(1, 1, 1, 0.5)
+
+[node name="EnergyR" type="ColorRect" parent="UI/UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+grow_vertical = 2
+mouse_filter = 1
+color = Color(1, 1, 1, 0.5)
+
+[node name="Bloom" type="ColorRect" parent="UI/UI"]
+material = SubResource("ShaderMaterial_vkixq")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Score" type="Label" parent="UI/UI"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 113.0
+offset_bottom = 48.0
+size_flags_stretch_ratio = 0.0
+theme_override_constants/line_spacing = 0
+text = "0"
+label_settings = SubResource("LabelSettings_c8uve")
+
+[node name="Points" type="Label" parent="UI/UI"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 15.0
+offset_top = 45.0
+offset_right = 59.0
+offset_bottom = 50.0
+text = "0"
+label_settings = SubResource("LabelSettings_ooqqh")
+
+[node name="Accuracy" type="Label" parent="UI/UI"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 64.0
+offset_top = 45.0
+offset_right = -15.0
+offset_bottom = 77.0
+text = "98.3%"
+label_settings = SubResource("LabelSettings_uhb1f")
+
+[node name="Combo" type="Label" parent="UI/UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 15.0
+offset_right = -110.0
+text = "6942"
+label_settings = SubResource("LabelSettings_uhb1f")
+horizontal_alignment = 2
+
+[node name="MultText" type="Label" parent="UI/UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 60.0
+offset_right = -30.0
+offset_bottom = 81.0
+text = "x4"
+label_settings = SubResource("LabelSettings_35u2o")
+horizontal_alignment = 2
+
+[node name="Multiplier" type="Control" parent="UI/UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+
+[node name="Bar" type="Line2D" parent="UI/UI/Multiplier"]
+position = Vector2(10, 0)
+points = PackedVector2Array(-32, 96, -80, 96, -112, 64, -192, 64)
+width = 11.0
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Line2D2" type="Line2D" parent="UI/UI/Multiplier"]
+position = Vector2(10, 0)
+points = PackedVector2Array(-32, 96, -80, 96, -112, 64, -192, 64)
+width = 9.0
+default_color = Color(0, 0, 0, 1)
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Fill" type="Line2D" parent="UI/UI/Multiplier"]
+position = Vector2(10, 0)
+points = PackedVector2Array(-32, 96, -80, 96, -112, 64, -192, 64)
+width = 9.0
+texture = SubResource("GradientTexture1D_aut8w")
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Pause" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/Pause"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.498039)
+
+[node name="Restart" type="Button" parent="UI/Pause"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_bottom = -84.0
+grow_vertical = 0
+focus_mode = 0
+icon = ExtResource("9_hpqew")
+alignment = 2
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="UI/Pause/Restart"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_right = 4.0
+grow_vertical = 2
+text = "Restart"
+label_settings = SubResource("LabelSettings_vgdps")
+vertical_alignment = 1
+
+[node name="Exit" type="Button" parent="UI/Pause"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_right = 23.0
+offset_bottom = -15.0
+grow_vertical = 0
+focus_mode = 0
+icon = ExtResource("10_t58jh")
+alignment = 2
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="UI/Pause/Exit"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_right = 4.0
+grow_vertical = 2
+text = "Exit
+"
+label_settings = SubResource("LabelSettings_vgdps")
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="UI/Pause"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+focus_mode = 0
+icon = ExtResource("11_66ehm")
+alignment = 2
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="UI/Pause/Button"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+grow_horizontal = 2
+text = "Resume"
+label_settings = SubResource("LabelSettings_cenvs")
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Pause"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 15.0
+offset_top = -8.0
+offset_right = -15.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="HSlider" parent="UI/Pause/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="End" type="HSlider" parent="UI/Pause/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="UI/Pause/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/Pause/Exit" to="." method="_on_exit_pressed"]
+[connection signal="button_down" from="UI/Pause/Button" to="." method="_on_button_pressed"]
+[connection signal="drag_ended" from="UI/Pause/VBoxContainer/Start" to="." method="_on_start_drag_ended"]
+[connection signal="drag_ended" from="UI/Pause/VBoxContainer/End" to="." method="_on_end_drag_ended"]

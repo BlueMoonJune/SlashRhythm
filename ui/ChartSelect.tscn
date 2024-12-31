@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=3 uid="uid://d0yu7lpjfv5au"]
+
+[ext_resource type="Script" path="res://ui/chart_select.gd" id="1_3ec4b"]
+[ext_resource type="Shader" path="res://assets/shaders/ui/bg.gdshader" id="2_2ukg8"]
+[ext_resource type="Script" path="res://ui/v_slant_container.gd" id="2_akx1a"]
+[ext_resource type="Shader" path="res://assets/shaders/ui/slant.gdshader" id="3_pj414"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g4ypx"]
+shader = ExtResource("2_2ukg8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ui8t1"]
+shader = ExtResource("3_pj414")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3ec4b")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_g4ypx")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.15, 0.15, 0.15, 1)
+
+[node name="SongList" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+size_flags_horizontal = 10
+size_flags_vertical = 3
+theme_override_constants/separation = -1
+script = ExtResource("2_akx1a")
+factor = 0.25
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ui8t1")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ui8t1")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.5
+anchor_bottom = 1.0
+offset_right = 2.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="sort_children" from="SongList" to="SongList" method="_on_sort_children"]

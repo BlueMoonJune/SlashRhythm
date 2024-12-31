@@ -1,0 +1,12 @@
+{
+	"artist": "Patricia Taxxon",
+	"track": "Wavetable",
+	"charter": "BlueMoonJune",
+	"difficulties": [
+		{
+			"name": "standard",
+			"difficulty": 5,
+			"file": "chart.ch"
+		}
+	]
+}
